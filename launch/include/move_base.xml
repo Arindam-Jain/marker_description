@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!--- Run move base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="controller_frequency" value="2"/>
+
+    <!-- Use the dwa local planner-->
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+
+    <!--- load common configuration files -->
+    <rosparam file="$(find marker_description)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find marker_description)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+    <!--- load global navigation specific parameters -->
+    <rosparam file="$(find marker_description)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find marker_description)/config/global_costmap_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find marker_description)/config/base_local_planner_params.yaml" command="load" ns="TebLocalPlannerROS"/>
+
+    <!--- load planner parameters -->
+    <!--rosparam file="$(find aitech_task)/config/dwa_local_planner.yaml" command="load" ns="DWAPlannerROS" /-->
+  </node>
+
+</launch>

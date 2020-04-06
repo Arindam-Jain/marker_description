@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="marker_description" type="laser2pc" name="Laser2PC"/>
+  <node pkg="marker_description" type="controller" name="controller" output="screen"/>
+</launch>

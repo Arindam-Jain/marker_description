@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="marker_description" type="laser2pc_m" name="Laser2PC" output="screen"/>
+  <node pkg="marker_description" type="sendgoal_m" name="GoalSender" output="screen"/>
+</launch>

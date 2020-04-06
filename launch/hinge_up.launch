@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="marker_description" type="hinge_up_m" name="pub_hinge" output="screen"/>
+</launch>
