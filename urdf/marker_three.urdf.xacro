@@ -1,0 +1,333 @@
+<?xml version="1.0" ?>
+<robot name="marker" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find marker_description)/urdf/gazebo_properties.xacro"/>
+
+  <link name="base_link"/>
+
+  <joint name="base_link_base_joint1" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_plate1"/>
+    <origin xyz="0.0 0 0.001" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_plate1">
+    <visual>
+      <origin xyz="0 2.5 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.12 0.08 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="5 5 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="5.1175580e-05" ixy="-20.2369783e-11" ixz="-25.9381719e-09"
+               iyy="5.1192413e-05" iyz="-4.4400107e-11"
+               izz="10.0712558e-05" />
+      </inertial>
+  </link>
+
+  <joint name="base_link_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_plate"/>
+    <origin xyz="0.0 0 0.001" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_plate">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.12 0.08 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="5 5 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="5.1175580e-05" ixy="-20.2369783e-11" ixz="-25.9381719e-09"
+               iyy="5.1192413e-05" iyz="-4.4400107e-11"
+               izz="10.0712558e-05" />
+      </inertial>
+  </link>
+
+  <joint name="marker_base_joint__" type="fixed">
+    <parent link="base_plate1"/>
+    <child link="marker_link1"/>
+    <origin xyz="0 0 0.001" rpy="1.57 0 -3.14"/>
+  </joint>
+
+  <link name="marker_link1">
+    <visual>
+      <origin xyz="0.65 0 2.5" rpy="0 3.14 0"/>
+      <geometry>
+        <mesh filename="package://marker_description/meshes/Docking_Mirror.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0.65 0 2.5" rpy="0 3.14 0"/>
+      <geometry>
+        <mesh filename="package://marker_description/meshes/Docking_Mirror.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+      </inertial>
+  </link>
+
+  <joint name="marker_base_joint" type="fixed">
+    <parent link="base_plate"/>
+    <child link="marker_link"/>
+    <origin xyz="0 0 0.001" rpy="1.57 0 -3.14"/>
+  </joint>
+
+  <link name="marker_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://marker_description/meshes/Double_conveyor.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://marker_description/meshes/Double_conveyor.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+      </inertial>
+  </link>
+
+<!-- left side/ -->
+  <joint name="marker_base_joint_1" type="fixed">
+    <parent link="marker_link1"/>
+    <child link="reflector_plate_1"/>
+    <origin xyz="0.39 0.233 2.453" rpy="0 -0.785 0"/>
+  </joint>
+
+  <link name="reflector_plate_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.080 0.280 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.080 0.280 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.000001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+    </inertial>
+  </link>
+
+  <joint name="marker_base_joint1" type="fixed">
+    <parent link="marker_link"/>
+    <child link="reflector_plate"/>
+    <origin xyz="0.398 0.233 0.367" rpy="0 0.785 0"/>
+  </joint>
+
+  <link name="reflector_plate">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.080 0.280 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.080 0.280 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.000001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+    </inertial>
+  </link>
+<!-- left side/-->
+<joint name="marker_base_joint_2" type="fixed">
+  <parent link="marker_link1"/>
+  <child link="reflector_plate_2"/>
+  <origin xyz="0.735 0.233 2.498" rpy="0 -0.785 0"/>
+</joint>
+
+<link name="reflector_plate_2">
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.040 0.280 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.040 0.280 0.001"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <origin xyz="0 0 0" />
+    <mass value="0.000001" />
+    <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+  </inertial>
+</link>
+
+
+  <joint name="marker_base_joint2" type="fixed">
+    <parent link="marker_link"/>
+    <child link="reflector_plate2"/>
+    <origin xyz="0.744 0.233 0.322" rpy="0 0.785 0"/>
+  </joint>
+
+  <link name="reflector_plate2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.040 0.280 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.040 0.280 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.000001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+    </inertial>
+  </link>
+
+<!-- left side/ -->
+<joint name="marker_base_joint_3" type="fixed">
+  <parent link="marker_link1"/>
+  <child link="reflector_plate_3"/>
+  <origin xyz="0.57 0.233 2.48" rpy="0 0 0"/>
+</joint>
+
+<link name="reflector_plate_3">
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.150 0.280 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.150 0.280 0.001"/>
+    </geometry>
+  </collision>
+  <inertial>
+    <origin xyz="0 0 0" />
+    <mass value="0.000001" />
+    <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+  </inertial>
+</link>
+
+
+  <joint name="marker_base_joint3" type="fixed">
+    <parent link="marker_link"/>
+    <child link="reflector_plate3"/>
+    <origin xyz="0.575 0.233 0.338" rpy="0 0 0"/>
+  </joint>
+
+  <link name="reflector_plate3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.150 0.280 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.150 0.280 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.000001" />
+      <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09" iyy="1.1192413e-05" iyz="-1.4400107e-11" izz="2.0712558e-05"/>
+    </inertial>
+  </link>
+
+  <gazebo reference="marker_link">
+    <material>Gazebo/Orange</material>
+    <laserRetro>0</laserRetro>
+  </gazebo>
+
+  <gazebo reference="marker_link1">
+    <material>Gazebo/Orange</material>
+    <laserRetro>0</laserRetro>
+  </gazebo>
+
+  <gazebo reference="base_plate">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="base_plate1">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="reflector_plate_1">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+  <gazebo reference="reflector_plate">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+  <gazebo reference="reflector_plate_2">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+  <gazebo reference="reflector_plate2">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+  <gazebo reference="reflector_plate_3">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+  <gazebo reference="reflector_plate3">
+    <material>Gazebo/Blue</material>
+    <laserRetro>500</laserRetro>
+  </gazebo>
+
+</robot>

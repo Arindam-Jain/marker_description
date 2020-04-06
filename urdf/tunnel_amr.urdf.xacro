@@ -1,0 +1,175 @@
+<?xml version="1.0" ?>
+<robot name="tunnel_amr" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="robot_namespace" default="/" />
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+
+  <xacro:property name="chassisLength" value="1.150"/>
+  <xacro:property name="chassisWidth" value="0.766"/>
+  <xacro:property name="chassisHeight" value="0.01"/>
+  <xacro:property name="chassisMass" value="120"/>
+
+  <xacro:property name="casterRadius" value="0.038"/>
+  <xacro:property name="casterLength" value="0.04"/>	
+  <xacro:property name="casterMass" value="0.2"/>
+
+  <xacro:property name="wheelWidth" value="0.05"/>
+  <xacro:property name="wheelRadius" value="0.1"/>
+  <xacro:property name="wheelMass" value="0.5"/>
+
+  <xacro:include filename="$(find marker_description)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find marker_description)/urdf/tunnel.gazebo.xacro"/>  
+  <xacro:include filename="$(find marker_description)/urdf/tunnel.macros.xacro"/>
+	
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.140" rpy="0 0 0"/>
+  </joint>
+
+
+  <link name="base_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0  0"/>
+      <geometry>
+	<box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="${chassisMass}" />
+      <box_inertia m="${chassisMass}" x="1.150" y="0.766" z="0.290"/>
+      <!--inertia ixx="7.274" ixy="0.0" ixz="0.0"
+               iyy="14.63" iyz="0.0"
+               izz="19.093" /-->
+    </inertial>  
+</link>
+
+  
+  <wheel lr="left" tY="0.280"/>
+  <wheel lr="right" tY="-0.280"/>
+  <caster_front lr="left" tY="0.300"/>
+  <caster_front lr="right" tY="-0.300"/>
+  <caster_back lr="left" tY="0.300" />
+  <caster_back lr="right" tY="-0.300"/>
+
+  <joint name="scan_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser"/>
+    <!--origin xyz="0.43 0.0 -0.025" rpy="${M_PI} 0.0 -0.16"/--> <!-- y -0.16-->
+    <origin xyz="0.500 0.0 0.1" rpy="0.0 0.0 0.0"/> 
+  </joint>
+
+  <joint name="hinge_joint" type="prismatic">
+    <parent link="base_link"/>
+    <child link="hinge_link"/>
+    <!--origin xyz="0.43 0.0 -0.025" rpy="${M_PI} 0.0 -0.16"/--> <!-- y -0.16-->
+    <origin xyz="-0.456 0.0 0.05" rpy="0.0 0.0 0.0"/> 
+    <!--limit effort="30" velocity="1.0" lower="0" upper="0" /-->
+    <axis xyz="0 0 1"/>
+    <limit effort="10000" lower="-5.0" upper="5.0" velocity="1" />
+  </joint>
+ 
+
+
+  <link name="laser">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.005" radius="0.025"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.040" radius="0.025"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="1.5" />
+      <inertia ixx="0.003" ixy="0.0" ixz="0.0"
+               iyy="0.003" iyz="0.0"
+               izz="0.0018" />
+    </inertial>
+  </link>
+
+
+  <link name="hinge_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.088" radius="0.025"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.088" radius="0.025"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="1.5" />
+      <inertia ixx="0.003" ixy="0.0" ixz="0.0"
+               iyy="0.003" iyz="0.0"
+               izz="0.0018" />
+    </inertial>
+  </link>
+
+
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0.0 0 -0.02" rpy="0 0 0"/>
+  </joint>
+
+  <link name="imu_link"/>
+
+  <sensor_d435 parent="base_link">
+   <origin xyz="0.555 0.0 0.3" rpy="0 0 0.0"/>
+  </sensor_d435>
+
+
+  <!--                GAZEBO RELATED PART                             -->
+
+  <!-- ROS Control plugin for Gazebo. This allows Gazebo and Ros to to be connected,
+       and for ros to control the model in the gazebo visualization -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <!--this is the namespace in the yaml file-->
+      <robotNamespace>/simple_model</robotNamespace>
+      <!--The two lines below came from: https://answers.ros.org/question/292444/gazebo_ros_control-plugin-gazeboroscontrolplugin-missing-legacymodens-defaultrobothwsim/-->
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+
+  <!-- transmission is the ability to define the ros controller used to control the joint. -->
+  <transmission name="base_to_second_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="motor1">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="hinge_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+</robot>
